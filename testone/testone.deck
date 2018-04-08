@@ -1,0 +1,134 @@
+begin:constant
+  #mine
+  um = micron
+  fs = femto
+  ps = femto*1000
+  lambda = 0.780*um
+
+  # convience
+  s = sqrt(y**2 + z**2)
+
+  #target lims
+  txmin = -18*um
+  txmax =  10*um
+  tymin =  -8*um
+  tymax =   8*um
+  tzmin =  -8*um
+  tzmax =   8*um
+  
+  #material
+  scalel = 3.4*um
+  targ_s = 0*um
+  targ_e = 10*um
+  targetsol = 3.34e22 * 3
+  targetexp = exp(-abs(x-targ_s)/scalel)*targetsol
+  target = if(x lt targ_s, targetexp, targetsol)
+  boundx = (x ge txmin) and (x le txmax)
+  boundy = (y ge tymin) and (y le tymax)
+  boundz = (z ge tzmin) and (z le tzmax)
+  targdens=if(boundx and boundy and boundz, target, 0)
+end:constant
+
+begin:control
+  nx = 350
+  ny = 200
+  nz = 200
+  t_end = 200*fs
+  npart = 280*6*2 * 160*6*2 * 160*6*2
+  
+  #I hate I can't set this myself
+  dt_multiplier = 0.9
+
+  # size of domain
+  x_min = -20*um
+  x_max =  15*um
+  y_min = -10*um
+  y_max =  10*um
+  z_min = -10*um
+  z_max =  10*um
+
+  #this is so me
+  field_ionisation=T
+  simplify_deck=T
+  allow_missing_restart=T
+  field_ionisation=T
+  stdout_frequency=1000
+  
+end:control
+
+
+begin:boundaries
+  bc_x_min = simple_laser
+  bc_x_max = simple_outflow
+  bc_y_min = simple_outflow
+  bc_y_max = simple_outflow
+  bc_z_min = simple_outflow
+  bc_z_max = simple_outflow
+end:boundaries
+
+
+#species
+#water
+begin:species
+  name = proton
+  charge = 1.0
+  mass = 1836
+  frac = 2.0/6.0
+  density = targetdens
+end:species
+
+begin:species
+  name = oxygen
+  charge = 1.0
+  mass = 29158
+  ionisation_energies = \
+    (35.1*ev, 54.9*ev, 77.4*ev, 113.8*ev, 138.1*ev, 739.3*ev, 871.4*eV)
+  density = targetdens
+end:species
+
+begin:species
+  name = electron
+  charge = -1.0
+  mass = 1.0
+  frac = 3.0/6.0
+  density = targetdens
+end:species
+
+
+begin:laser
+  boundary = x_min
+  intensity_w_cm2=1e18
+  lambda = lambda
+  profile = gauss(s, 0.0, 2.2*um/(2*sqrt(log(2))))
+end:laser
+
+####
+#Output
+
+
+begin:output
+  name = fields
+  # number of timesteps between output dumps
+  dt_snapshot = 1*fs
+  # grid outputs
+  grid = always
+  poynt_flux = always
+  ekbar = always + species
+  number_density = always + species
+end:output
+
+begin:output
+  name = parts
+  dt_snapshot = 5*fs
+  restartable = T
+  # particle outputs
+  particles = always
+  particle_weight = always
+  ejected_particles = always
+  px = always
+  py = always
+  pz = always
+  mass = always
+  charge = always
+end:output
+
