@@ -82,7 +82,7 @@ begin:species
   charge = 1.0
   mass = 29158
   ionisation_energies = \
-    (35.1*ev, 54.9*ev, 77.4*ev, 113.8*ev, 138.1*ev, 739.3*ev, 871.4*eV)
+    (35.1*ev, 54.9*ev, 77.4*ev, 113.8*ev, 138.1*ev, 739.3*ev, 871.4*ev)
   density = targetdens
 end:species
 
