@@ -20,7 +20,7 @@ begin:constant
   scalel = 3.4*um
   targ_s = 0*um
   targ_e = 10*um
-  targetsol = 3.34e22 * 3
+  targetsol = 3.34e22
   targetexp = exp(-abs(x-targ_s)/scalel)*targetsol
   target = if(x lt targ_s, targetexp, targetsol)
   boundx = (x gt txmin) and (x lt txmax)
@@ -34,7 +34,6 @@ begin:control
   ny = 200
   nz = 200
   t_end = 200*fs
-  npart = 280*6*2 * 160*6*2 * 160*6*2
   
   #I hate I can't set this myself
   dt_multiplier = 0.9
@@ -73,8 +72,8 @@ begin:species
   name = proton
   charge = 1.0
   mass = 1836
-  frac = 2.0/6.0
-  density = targdens
+  npart_per_cell = 6
+  density = targdens*2
 end:species
 
 begin:species
@@ -85,15 +84,16 @@ begin:species
     (35.1*ev, 54.9*ev, 77.4*ev, 113.8*ev, 138.1*ev, 739.3*ev, 871.4*ev)
   #fucking manual is wrong jesus christ
   ionisation_electron_species = electron
-  density = targdens
+  npart_per_cell = 4
+  density = targdens*1
 end:species
 
 begin:species
   name = electron
   charge = -1.0
   mass = 1.0
-  frac = 3.0/6.0
-  density = targdens
+  npart_per_cell = 8
+  density = targdens*3
 end:species
 
 
