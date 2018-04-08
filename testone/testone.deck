@@ -74,7 +74,7 @@ begin:species
   charge = 1.0
   mass = 1836
   frac = 2.0/6.0
-  density = targetdens
+  density = targdens
 end:species
 
 begin:species
@@ -83,7 +83,9 @@ begin:species
   mass = 29158
   ionisation_energies = \
     (35.1*ev, 54.9*ev, 77.4*ev, 113.8*ev, 138.1*ev, 739.3*ev, 871.4*ev)
-  density = targetdens
+  #fucking manual is wrong jesus christ
+  ionisation_electron_species = electron
+  density = targdens
 end:species
 
 begin:species
@@ -91,7 +93,7 @@ begin:species
   charge = -1.0
   mass = 1.0
   frac = 3.0/6.0
-  density = targetdens
+  density = targdens
 end:species
 
 
@@ -99,7 +101,7 @@ begin:laser
   boundary = x_min
   intensity_w_cm2=1e18
   lambda = lambda
-  profile = gauss(s, 0.0, 2.2*um/(2*sqrt(log(2))))
+  profile = gauss(s, 0.0, 2.2*um/(2*sqrt(loge(2))))
 end:laser
 
 ####
