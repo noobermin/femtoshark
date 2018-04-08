@@ -23,9 +23,9 @@ begin:constant
   targetsol = 3.34e22 * 3
   targetexp = exp(-abs(x-targ_s)/scalel)*targetsol
   target = if(x lt targ_s, targetexp, targetsol)
-  boundx = (x ge txmin) and (x le txmax)
-  boundy = (y ge tymin) and (y le tymax)
-  boundz = (z ge tzmin) and (z le tzmax)
+  boundx = (x gt txmin) and (x lt txmax)
+  boundy = (y gt tymin) and (y lt tymax)
+  boundz = (z gt tzmin) and (z lt tzmax)
   targdens=if(boundx and boundy and boundz, target, 0)
 end:constant
 
