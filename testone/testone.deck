@@ -17,10 +17,10 @@ begin:constant
   tzmax =   8*um
   
   #material
-  scalel = 3.4*um
+  scalel = 2*um
   targ_s = 0*um
   targ_e = 10*um
-  targetsol = 3.34e22
+  targetsol = 3.34e22*cc
   targetexp = exp(-abs(x-targ_s)/scalel)*targetsol
   target = if(x lt targ_s, targetexp, targetsol)
   boundx = (x gt txmin) and (x lt txmax)
