@@ -27,6 +27,11 @@ begin:constant
   boundy = (y gt tymin) and (y lt tymax)
   boundz = (z gt tzmin) and (z lt tzmax)
   targdens=if(boundx and boundy and boundz, target, 0)
+  temp = 1*ev
+
+  #laser
+  spotsize=2.2*um
+  pulse=40*fs
 end:constant
 
 begin:control
@@ -74,6 +79,7 @@ begin:species
   mass = 1836
   npart_per_cell = 6
   density = targdens*2
+  temp_ev = temp
 end:species
 
 begin:species
@@ -86,6 +92,7 @@ begin:species
   ionisation_electron_species = electron
   npart_per_cell = 4
   density = targdens*1
+  temp_ev = temp
 end:species
 
 begin:species
@@ -94,6 +101,7 @@ begin:species
   mass = 1.0
   npart_per_cell = 8
   density = targdens*3
+  temp_ev = temp
 end:species
 
 
@@ -101,7 +109,8 @@ begin:laser
   boundary = x_min
   intensity_w_cm2=1e18
   lambda = lambda
-  profile = gauss(s, 0.0, 2.2*um/(2*sqrt(loge(2))))
+  profile = gauss(s, 0.0, spot/(2*sqrt(loge(2))))
+  t_profile = sin(2*pi*time/(2*pulse))^2
 end:laser
 
 ####
