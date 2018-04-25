@@ -128,7 +128,7 @@ begin:laser
   boundary = x_min
   intensity_w_cm2=1e18
   phase =  kphase*y
-  lambda = lambda*cos(angi);
+  lambda = lambda*cos(angi)
   profile = gauss(s, 0.0, spotsize/(2*sqrt(loge(2))))
   t_profile = sin(2*pi*time/(2*pulse))^2
 end:laser
