@@ -22,7 +22,7 @@ begin:constant
   targ_e =  0.230*um
   targetsol = 1.08e22/cc
   tboundx = (x gt targ_s) and (x lt targ_e)
-  target = if(tboundx, targetexp, targetsol)
+  target = if(tboundx, targetsol, 0)
   boundy = (y gt tymin) and (y lt tymax)
   boundz = (z gt tzmin) and (z lt tzmax)
   targdens=if(boundy and boundz, target, 0)
